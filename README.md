@@ -21,14 +21,7 @@ This tool renders the exact same FreeMarker templates and theme-resolution chain
 of Keycloak, with realistic mock data standing in for a real realm/user/session. Save a file, see the
 result in under a second.
 
-```
-┌ Login | Email ┐ Theme [mytheme] Language [de]  Desktop|Tablet|Mobile  Light|Dark   ● Live reload
-│ login          │ ┌──────────────────────────────────────────────┐
-│ login-otp      │ │        rendered template (iframe)            │
-│  default error │ │                                              │
-│  multiple-dev… │ │                                              │
-│ register       │ └──────────────────────────────────────────────┘
-```
+![Screenshot of the preview UI, showing a branded login page next to the template list](docs/screenshot.png)
 
 ## Getting started
 
