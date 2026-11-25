@@ -1,0 +1,7 @@
+{
+  "requiredActions": [
+    "CONFIGURE_TOTP",
+    "UPDATE_PASSWORD"
+  ],
+  "linkExpiration": 720
+}

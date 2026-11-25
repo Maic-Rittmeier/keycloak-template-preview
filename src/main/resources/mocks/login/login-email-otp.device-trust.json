@@ -1,0 +1,7 @@
+// Device Trust enabled with a limited duration (not permanent)
+{
+  "deviceTrustEnabled": true,
+  "deviceTrustPermanent": false,
+  "trustDurationValue": 30,
+  "trustDurationUnitKey": "unitDayMany"
+}

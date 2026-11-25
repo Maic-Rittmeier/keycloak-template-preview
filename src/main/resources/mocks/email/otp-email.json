@@ -1,0 +1,6 @@
+// for-keycloak/email-otp-authenticator: OTP code email
+{
+  "_subjectKey": "emailOtpSubject",
+  "otp": "482913",
+  "ttlMinutes": 10
+}

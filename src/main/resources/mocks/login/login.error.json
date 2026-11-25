@@ -1,0 +1,13 @@
+{
+  "message": {
+    "type": "error",
+    "summary": "invalidUserMessage"
+  },
+  "messagesPerField": {
+    "username": "invalidUserMessage",
+    "password": "invalidUserMessage"
+  },
+  "login": {
+    "username": "john.doe"
+  }
+}

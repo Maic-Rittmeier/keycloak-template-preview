@@ -1,0 +1,7 @@
+{
+  "execution": "exec-webauthn",
+  "message": {
+    "type": "error",
+    "summary": "webauthn-error-registration"
+  }
+}

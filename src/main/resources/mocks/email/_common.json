@@ -1,0 +1,21 @@
+// Defaults for ALL emails. "_subjectKey"/"_subjectArgs" override the subject.
+{
+  "realmName": "Demo Booking System",
+  "user": {
+    "username": "john.doe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john@example.com",
+    "attributes": {}
+  },
+  "link": "https://sso.example.com/realms/demo/login-actions/action-token?key=eyJhbGciOi...",
+  "linkExpiration": 720,
+  "event": {
+    "event": "UPDATE_PASSWORD",
+    "client": "booking-app",
+    "date": "20.11.2026, 13:05",
+    "ipAddress": "203.0.113.17",
+    "details": [],
+    "detail": { "credential_type": "otp" }
+  }
+}

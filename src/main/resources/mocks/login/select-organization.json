@@ -1,0 +1,14 @@
+{
+  "user": {
+    "organizations": [
+      {
+        "alias": "acme",
+        "name": "ACME Inc."
+      },
+      {
+        "alias": "globex",
+        "name": "Globex AG"
+      }
+    ]
+  }
+}

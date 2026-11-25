@@ -1,0 +1,9 @@
+{
+  "x509": {
+    "formData": {
+      "subjectDN": "CN=John Doe, O=Example",
+      "isUserEnabled": true,
+      "username": "john.doe"
+    }
+  }
+}

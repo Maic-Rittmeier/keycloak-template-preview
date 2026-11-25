@@ -1,0 +1,5 @@
+// Device Trust enabled, set to never expire
+{
+  "deviceTrustEnabled": true,
+  "deviceTrustPermanent": true
+}

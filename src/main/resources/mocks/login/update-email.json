@@ -1,0 +1,24 @@
+{
+  "profile": {
+    "attributes": [
+      {
+        "name": "email",
+        "displayName": "${email}",
+        "required": true,
+        "readOnly": false,
+        "multivalued": false,
+        "autocomplete": "email",
+        "annotations": {
+          "inputType": "email"
+        },
+        "validators": {},
+        "values": [
+          "max@example.com"
+        ],
+        "value": "max@example.com",
+        "html5DataAnnotations": {}
+      }
+    ],
+    "html5DataAnnotations": {}
+  }
+}

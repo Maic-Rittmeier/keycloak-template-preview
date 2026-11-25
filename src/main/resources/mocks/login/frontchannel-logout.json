@@ -1,0 +1,15 @@
+{
+  "logout": {
+    "logoutRedirectUri": "#redirect",
+    "clients": [
+      {
+        "name": "Booking System",
+        "frontChannelLogoutUrl": "about:blank"
+      },
+      {
+        "name": "Admin Portal",
+        "frontChannelLogoutUrl": "about:blank"
+      }
+    ]
+  }
+}

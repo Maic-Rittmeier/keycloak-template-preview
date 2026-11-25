@@ -1,0 +1,33 @@
+/* Example branding – only overrides CSS variables from Keycloak/PatternFly 5 */
+:root {
+    --brand-color: #0b6e4f;
+    --brand-color-hover: #08503a;
+    --keycloak-card-top-color: var(--brand-color);
+    --keycloak-logo-url: url('../img/logo.svg');
+    --pf-v5-global--primary-color--100: var(--brand-color);
+    --pf-v5-global--primary-color--200: var(--brand-color-hover);
+    --pf-v5-global--link--Color: var(--brand-color);
+    --pf-v5-global--link--Color--hover: var(--brand-color-hover);
+}
+
+.login-pf body {
+    background: linear-gradient(135deg, #e8f3ef 0%, #c9e4d8 100%);
+}
+
+.login-pf #kc-header-wrapper {
+    text-transform: none;
+    letter-spacing: .02em;
+    color: #0b3d2e !important; /* Keycloak itself sets !important here */
+}
+
+.login-pf #kc-header-wrapper strong {
+    color: var(--brand-color);
+}
+
+/* Dark mode (Keycloak sets the class from kcDarkModeClass on <html>) */
+.pf-v5-theme-dark.login-pf body {
+    background: linear-gradient(135deg, #0f1f1a 0%, #163a2e 100%);
+}
+.pf-v5-theme-dark.login-pf #kc-header-wrapper {
+    color: #d7efe5 !important;
+}

@@ -1,0 +1,6 @@
+{
+  "logoutConfirm": {
+    "code": "logout-code",
+    "skipLink": false
+  }
+}

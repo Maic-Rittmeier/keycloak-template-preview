@@ -1,0 +1,166 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.gradleup.shadow' version '8.3.9'
+}
+
+group = 'dev.kcpreview'
+version = '1.0.0'
+description = 'Renders Keycloak login and email themes (FreeMarker) in the browser without a running Keycloak'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// Set this to the Keycloak version of your servers: provides the original templates, CSS and texts
+def keycloakVersion = project.findProperty('keycloak.version') ?: '26.8.2'
+// Keycloak 26.x uses FreeMarker 2.3.3x
+def freemarkerVersion = '2.3.34'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.freemarker:freemarker:${freemarkerVersion}"
+    // Only the theme files (theme/base, theme/keycloak, theme/keycloak.v2: templates, properties, messages)
+    implementation("org.keycloak:keycloak-themes:${keycloakVersion}") {
+        transitive = false
+    }
+    // keycloak-themes itself does NOT include the PatternFly CSS/JS/fonts the templates reference
+    // (theme/keycloak/common/resources/vendor/...) - that's this separate artifact, same version.
+    // Without it, every login page renders completely unstyled.
+    implementation("org.keycloak:keycloak-themes-vendor:${keycloakVersion}") {
+        transitive = false
+    }
+}
+
+application {
+    mainClass = 'dev.kcpreview.Main'
+}
+
+tasks.named('compileJava') {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('jar') {
+    archiveFileName = 'keycloak-template-preview-plain.jar'
+}
+
+tasks.named('shadowJar') {
+    archiveFileName = 'keycloak-template-preview.jar'
+    manifest {
+        attributes 'Main-Class': 'dev.kcpreview.Main'
+    }
+}
+
+// gradlew run --args="--port=8091"
+tasks.named('run') {
+    standardInput = System.in
+}
+
+tasks.named('build') {
+    dependsOn tasks.named('shadowJar')
+}
+
+// gradlew check  →  also runs the app's own --check over the bundled themes (mytheme, email-otp),
+// so a broken template fails the build the same way a failing test would.
+tasks.register('verifyThemes', JavaExec) {
+    dependsOn tasks.named('shadowJar')
+    group = 'verification'
+    description = 'Runs --check over the bundled themes to catch broken templates.'
+    mainClass = 'dev.kcpreview.Main'
+    classpath = files(tasks.named('shadowJar').flatMap { it.archiveFile })
+    args = ['--check']
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyThemes')
+}
+
+// gradlew exportDeployTheme  →  build/deploy/mytheme, ready to copy to a real Keycloak server.
+//
+// Strips the preview-only "import=...email-otp" additions: on a real server with the
+// for-keycloak/email-otp-authenticator plugin JAR installed, Keycloak injects its templates and
+// messages into every theme automatically - no import needed there. Importing a theme named
+// "email-otp" that doesn't exist on that server would instead break loading of mytheme. See the
+// README section "Reusable building blocks (e.g. SPI plugin themes)".
+tasks.register('exportDeployTheme', Copy) {
+    def pluginMarker = 'for-keycloak/email-otp-authenticator'
+
+    from('themes/mytheme')
+    into(layout.buildDirectory.dir('deploy/mytheme'))
+
+    filesMatching('login/theme.properties') {
+        filter { String line ->
+            if (line.contains(pluginMarker)) return null
+            line.startsWith('import=') ? line.replace(',login/email-otp', '') : line
+        }
+    }
+    filesMatching('email/theme.properties') {
+        filter { String line ->
+            (line.contains(pluginMarker) || line == 'import=email/email-otp') ? null : line
+        }
+    }
+
+    doLast {
+        logger.lifecycle("Deployable theme (without preview-only plugin imports) written to: ${destinationDir}")
+    }
+}
+
+// gradlew exportThemeJar -Ptheme=mytheme [-PthemesDir=themes]  →  build/theme-jars/mytheme.jar
+//
+// Packages <themesDir>/<name> as a Keycloak theme-provider JAR: theme/<name>/... plus a generated
+// META-INF/keycloak-themes.json - the same format Keycloak loads from a JAR dropped into
+// providers/, for servers where you can't just copy files into themes/ (e.g. Skycloak).
+// Strips the same preview-only "import=...email-otp" additions as exportDeployTheme.
+//
+// themesDir defaults to this repo's own themes/, but can point anywhere - e.g. a separate,
+// privately-held theme repo cloned next to this one: -PthemesDir=../acme-keycloak-theme
+tasks.register('exportThemeJar', Jar) {
+    def themeName = project.findProperty('theme')?.toString()
+    def themesDir = (project.findProperty('themesDir') ?: 'themes').toString()
+    def pluginMarker = 'for-keycloak/email-otp-authenticator'
+    def metaDir = layout.buildDirectory.dir('generated/theme-jar-meta')
+
+    doFirst {
+        def base = file(themesDir)
+        def available = base.directory ? (base.list()?.join(', ') ?: '(none)') : "(no such directory: ${themesDir})"
+        if (!themeName) {
+            throw new GradleException("Pass -Ptheme=<name> (and -PthemesDir=<dir> for a theme outside ./themes). Available in ${themesDir}/: ${available}")
+        }
+        if (!file("${themesDir}/${themeName}").directory) {
+            throw new GradleException("No such folder ${themesDir}/${themeName}. Available in ${themesDir}/: ${available}")
+        }
+        def types = ['login', 'email'].findAll { file("${themesDir}/${themeName}/${it}").directory }
+        File metaInf = metaDir.get().dir('META-INF').asFile
+        metaInf.mkdirs()
+        new File(metaInf, 'keycloak-themes.json').text =
+                "{\"themes\":[{\"name\":\"${themeName}\",\"types\":[" + types.collect { "\"${it}\"" }.join(',') + "]}]}"
+    }
+
+    archiveFileName = "${themeName ?: 'theme'}.jar"
+    destinationDirectory = layout.buildDirectory.dir('theme-jars')
+
+    from(metaDir)
+    from("${themesDir}/${themeName ?: '_unset_'}") {
+        into("theme/${themeName}")
+        filesMatching('login/theme.properties') {
+            filter { String line ->
+                if (line.contains(pluginMarker)) return null
+                line.startsWith('import=') ? line.replace(',login/email-otp', '') : line
+            }
+        }
+        filesMatching('email/theme.properties') {
+            filter { String line ->
+                (line.contains(pluginMarker) || line == 'import=email/email-otp') ? null : line
+            }
+        }
+    }
+
+    doLast {
+        logger.lifecycle("Theme JAR written to: ${archiveFile.get().asFile}")
+    }
+}

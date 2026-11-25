@@ -1,0 +1,10 @@
+{
+  "organization": {
+    "name": "ACME Inc."
+  },
+  "firstName": "John",
+  "lastName": "Doe",
+  "_subjectArgs": [
+    "ACME Inc."
+  ]
+}

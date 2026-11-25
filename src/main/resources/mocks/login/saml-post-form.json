@@ -1,0 +1,8 @@
+{
+  "samlPost": {
+    "url": "#saml",
+    "SAMLRequest": "PHNhbWxwOkF1dGhuUmVxdWVzdC8+",
+    "SAMLResponse": "",
+    "relayState": "state"
+  }
+}

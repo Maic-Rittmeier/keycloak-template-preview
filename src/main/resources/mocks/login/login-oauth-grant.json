@@ -1,0 +1,23 @@
+{
+  "oauth": {
+    "code": "grant-code",
+    "clientScopesRequested": [
+      {
+        "consentScreenText": "${profileScopeConsentText}",
+        "dynamicScopeParameter": "",
+        "parameterizedScopeParameter": ""
+      },
+      {
+        "consentScreenText": "${emailScopeConsentText}",
+        "dynamicScopeParameter": "",
+        "parameterizedScopeParameter": ""
+      }
+    ]
+  },
+  "client": {
+    "attributes": {
+      "policyUri": "https://example.com/privacy",
+      "tosUri": "https://example.com/terms"
+    }
+  }
+}

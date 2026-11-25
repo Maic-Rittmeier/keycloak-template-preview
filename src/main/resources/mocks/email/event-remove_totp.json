@@ -1,0 +1,5 @@
+{
+  "event": {
+    "event": "REMOVE_TOTP"
+  }
+}

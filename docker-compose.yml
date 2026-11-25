@@ -1,0 +1,13 @@
+# docker compose up --build  →  http://localhost:8090
+services:
+  preview:
+    build:
+      context: .
+      args:
+        KEYCLOAK_VERSION: "26.8.2"   # = your Keycloak server version
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./themes:/work/themes:ro
+      - ./plugin-themes:/work/plugin-themes:ro
+      - ./mocks:/work/mocks:ro

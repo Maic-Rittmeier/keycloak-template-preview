@@ -1,0 +1,6 @@
+{
+  "crossDeviceQrCode": "iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACHUlEQVR42u3dQbLCMAgA0N7/0v0HcKwESIvfl6XTiXkumgwBPM5/PQ48PDw8PDw8PDw8PDw8PDw8PDy8H+Yd4RF5/vWZd99YWQMeHh7eBN6H1+7l0t99/YcFvcwQXwMeHh7eHN71i76yxOs5K2vAw8PDm8+73gZWj+N4eHh4v8bLjd7NCQ8PD+9Z3uozuSP1atgCDw8PbyZv9QIsjo9sD+Pu9/Dw8PBak67iS1x99Y/IKcPDw8NLHakrodhcAkEueQsPDw/vKd5quKEhcLAYwmjY9/Dw8PC28SoXV5FPIsfxyAEdDw8P71lefNJ4uDY+W2TO7ZkReHh4eE2pA5V01frV2vbiUjw8PLxW3mqif/zAfZZLAvDw8PAm8LqSn3JNT25NusLDw8O7sVdSfEuoX4+du5Ou8PDw8Db358ylrnaVj26vY8DDw8NrrSGqNB/phW2pY8DDw8NrPXNGkkpXE1KPVNMTPDw8vMm8XAuSXKA29+rHw8PDm8OLbwOrSVG5hKpkkSoeHh7e7byu5ia5I3IllIyHh4d3P683QJBcXDgIgoeHhzeHt5omlUvNXw1wxMMWeHh4eE/xKpvBuVhMdaQaOuPh4eF9Oy8ewK0X529sBYWHh4d3Cy93LK7/NHh4eHjTeL1t8SuFBINiLXh4eHhNF2BHpW1T4Lrr4f/fw8PDw9uWdDVn4OHh4eHh4eHh4eHh4eHh4eHh4f0A7w/qTlHEoBu43wAAAABJRU5ErkJggg==",
+  "crossDeviceWalletUrl": "openid4vp://authorize?request_uri=https://sso.example.com/realms/demo/oid4vp/request/abc123",
+  "crossDeviceStatusUrl": "https://sso.example.com/realms/demo/oid4vp/status/abc123",
+  "sameDeviceWalletUrl": "openid4vp://authorize?request_uri=https://sso.example.com/realms/demo/oid4vp/request/abc123"
+}

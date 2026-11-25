@@ -1,0 +1,7 @@
+{
+  "brokerContext": {
+    "username": "john.doe"
+  },
+  "idpAlias": "google",
+  "idpDisplayName": "Google"
+}

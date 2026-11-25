@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keycloak Template Preview</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --panel: #ffffff; --line: #e1e4e8; --text: #1d2329; --muted: #6a737d;
+    --accent: #2f6fde; --accent-soft: #e8f0fd; --danger: #c62828; --ok: #2e7d32;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; color: var(--text);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100vh; display: grid; grid-template-rows: auto 1fr; background: var(--bg); }
+  header { display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1 { font-size: 15px; margin: 0 8px 0 0; white-space: nowrap; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+  .seg button { border: 0; background: transparent; padding: 6px 11px; cursor: pointer; font: inherit; color: var(--muted); }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  label.f { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+  select { font: inherit; padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--text); }
+  .spacer { flex: 1; }
+  .live { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+  .dot.flash { animation: flash .8s; }
+  @keyframes flash { 0% { box-shadow: 0 0 0 0 rgba(46,125,50,.7); } 100% { box-shadow: 0 0 0 10px rgba(46,125,50,0); } }
+  a.btn { color: var(--accent); text-decoration: none; font-size: 13px; }
+  main { display: grid; grid-template-columns: 290px 1fr; min-height: 0; }
+  aside { background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+  aside .search { padding: 10px; border-bottom: 1px solid var(--line); }
+  aside input { width: 100%; font: inherit; padding: 6px 9px; border: 1px solid var(--line); border-radius: 6px; }
+  #list { overflow: auto; flex: 1; padding: 6px 0; }
+  .item { padding: 6px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .item:hover { background: #f6f8fa; }
+  .item.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .item .n { font-size: 11px; color: var(--muted); font-weight: 400; }
+  .variants { display: flex; flex-wrap: wrap; gap: 5px; padding: 2px 14px 8px 22px; }
+  .chip { font-size: 12px; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--line); cursor: pointer; background: #fff; color: var(--muted); }
+  .chip.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .chain { padding: 10px 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .chain code { background: #f1f3f5; padding: 1px 5px; border-radius: 4px; }
+  .stage { display: flex; flex-direction: column; min-height: 0; }
+  .mailbar { display: none; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--line); align-items: center; gap: 12px; }
+  .mailbar.show { display: flex; }
+  .mailbar .subject { font-weight: 600; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mailbar .subject span { color: var(--muted); font-weight: 400; margin-right: 6px; }
+  .canvas { flex: 1; overflow: auto; display: flex; justify-content: center; padding: 18px; min-height: 0; }
+  .frame { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 6px 24px rgba(0,0,0,.06); border-radius: 6px; overflow: hidden; transition: width .2s; height: 100%; }
+  .frame.ftl-mode { overflow: auto; }
+  iframe { border: 0; width: 100%; height: 100%; display: block; background: #fff; }
+  pre.text { margin: 0; padding: 22px; white-space: pre-wrap; font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; height: 100%; overflow: auto; }
+  .ftl-file + .ftl-file { border-top: 1px solid var(--line); }
+  .ftl-path { font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); background: #f6f8fa; padding: 7px 16px; border-bottom: 1px solid var(--line); }
+  .ftl-src { margin: 0; padding: 16px 22px; white-space: pre-wrap; font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .empty { color: var(--muted); padding: 40px; text-align: center; }
+  .err { color: var(--danger); padding: 18px; white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Keycloak Template Preview</h1>
+  <div class="seg" id="typeSeg">
+    <button data-v="login">Login</button><button data-v="email">Email</button>
+  </div>
+  <label class="f">Theme <select id="theme"></select></label>
+  <label class="f">Language <select id="locale"></select></label>
+  <div class="seg" id="vpSeg" title="Viewport">
+    <button data-v="desktop">Desktop</button><button data-v="tablet">Tablet</button><button data-v="mobile">Mobile</button><button data-v="ftl">FTL</button>
+  </div>
+  <div class="seg" id="schemeSeg" title="prefers-color-scheme">
+    <button data-v="light">Light</button><button data-v="dark">Dark</button>
+  </div>
+  <div class="spacer"></div>
+  <span class="live" title="Changes to themes and mocks are reloaded automatically"><span class="dot" id="dot"></span>Live reload</span>
+  <a class="btn" id="openTab" target="_blank" href="#">Open in new tab ↗</a>
+</header>
+<main>
+  <aside>
+    <div class="search"><input id="filter" placeholder="Filter templates …" autocomplete="off"></div>
+    <div id="list"></div>
+    <div class="chain" id="chain"></div>
+  </aside>
+  <section class="stage">
+    <div class="mailbar" id="mailbar">
+      <div class="subject" id="subject"></div>
+      <div class="seg" id="partSeg"><button data-v="html">HTML</button><button data-v="text">Text</button></div>
+    </div>
+    <div class="canvas"><div class="frame" id="frame"><div class="empty">Select a template on the left</div></div></div>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const WIDTH = { desktop: "100%", tablet: "820px", mobile: "390px", ftl: "100%" };
+const state = Object.assign({ type: "login", theme: "", t: "", v: "default", l: "", vp: "desktop", scheme: "light", part: "html" },
+  Object.fromEntries(new URLSearchParams(location.hash.slice(1))));
+let catalog = null, templates = [], stamp = null;
+
+function saveHash() { location.replace("#" + new URLSearchParams(state).toString()); }
+function seg(id, key, onChange) {
+  const el = $(id);
+  el.querySelectorAll("button").forEach(b => b.onclick = () => { state[key] = b.dataset.v; mark(); onChange(); });
+  const mark = () => el.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === state[key]));
+  mark();
+  return mark;
+}
+async function json(url) { const r = await fetch(url, { cache: "no-store" }); return r.json(); }
+
+async function loadCatalog() {
+  catalog = await json("/api/catalog");
+  if (!state.l) state.l = catalog.defaultLocale;
+  fillThemes();
+}
+function fillThemes() {
+  const themes = catalog[state.type] || [];
+  const sel = $("#theme");
+  sel.innerHTML = "";
+  const order = [];
+  const byGroup = new Map();
+  themes.forEach(t => {
+    if (!byGroup.has(t.group)) { byGroup.set(t.group, []); order.push(t.group); }
+    byGroup.get(t.group).push(t);
+  });
+  for (const label of order) {
+    const og = document.createElement("optgroup"); og.label = label;
+    byGroup.get(label).forEach(t => og.append(new Option(t.name, t.name)));
+    sel.append(og);
+  }
+  if (!themes.some(t => t.name === state.theme)) state.theme = (themes.find(t => t.user) || themes[0] || {}).name || "";
+  sel.value = state.theme;
+}
+async function loadTemplates() {
+  if (!state.theme) return;
+  const data = await json(`/api/templates?type=${state.type}&theme=${encodeURIComponent(state.theme)}`);
+  templates = data.templates || [];
+  const loc = $("#locale"); loc.innerHTML = "";
+  (data.locales || []).forEach(l => loc.append(new Option(l, l)));
+  if (!(data.locales || []).includes(state.l)) state.l = (data.locales || ["en"])[0];
+  loc.value = state.l;
+  $("#chain").innerHTML = "Inheritance: " + (data.chain || []).map(c => `<code>${c}</code>`).join(" → ");
+  if (!templates.some(t => t.name === state.t)) {
+    const pref = state.type === "login" ? "login.ftl" : "email-verification.ftl";
+    state.t = (templates.find(t => t.name === pref) || templates[0] || {}).name || "";
+    state.v = "default";
+  }
+  renderList();
+}
+function renderList() {
+  const f = $("#filter").value.toLowerCase();
+  const list = $("#list"); list.innerHTML = "";
+  templates.filter(t => t.name.toLowerCase().includes(f)).forEach(t => {
+    const it = document.createElement("div");
+    it.className = "item" + (t.name === state.t ? " on" : "");
+    it.innerHTML = `<span>${t.name.replace(/\.ftl$/, "")}</span>` + (t.variants.length > 1 ? `<span class="n">${t.variants.length - 1} variants</span>` : "");
+    it.onclick = () => { state.t = t.name; state.v = "default"; renderList(); show(); };
+    list.append(it);
+    if (t.name === state.t && t.variants.length > 1) {
+      const vs = document.createElement("div"); vs.className = "variants";
+      t.variants.forEach(v => {
+        const c = document.createElement("span");
+        c.className = "chip" + (v === state.v ? " on" : ""); c.textContent = v;
+        c.onclick = () => { state.v = v; renderList(); show(); };
+        vs.append(c);
+      });
+      list.append(vs);
+    }
+  });
+}
+function renderUrl(part) {
+  const q = new URLSearchParams({ locale: state.l, variant: state.v, scheme: state.scheme });
+  if (part) q.set("part", part);
+  return `/render/${state.type}/${encodeURIComponent(state.theme)}/${encodeURIComponent(state.t)}?${q}`;
+}
+function sourceUrl() {
+  const base = `/source/${state.type}/${encodeURIComponent(state.theme)}/${encodeURIComponent(state.t)}`;
+  return state.type === "email" ? `${base}?part=${state.part}` : base;
+}
+let ftlBlobUrl = null;
+function revokeFtlBlob() { if (ftlBlobUrl) { URL.revokeObjectURL(ftlBlobUrl); ftlBlobUrl = null; } }
+
+async function show(keepScroll) {
+  saveHash();
+  const frame = $("#frame");
+  frame.style.width = WIDTH[state.vp];
+  frame.classList.toggle("ftl-mode", state.vp === "ftl");
+  $("#mailbar").classList.toggle("show", state.type === "email");
+  if (!state.t) { frame.innerHTML = `<div class="empty">No templates found</div>`; return; }
+  const isText = state.type === "email" && state.part === "text";
+  if (state.vp === "ftl") {
+    if (state.type === "email") $("#subject").innerHTML = `<span>Source:</span>${escapeHtml(state.part)}/${escapeHtml(state.t)}`;
+    const files = await json(sourceUrl());
+    frame.innerHTML = files.map(f =>
+      `<div class="ftl-file"><div class="ftl-path">${escapeHtml(f.path)}</div><pre class="ftl-src">${escapeHtml(f.source)}</pre></div>`
+    ).join("");
+    revokeFtlBlob();
+    const page = "<!doctype html><meta charset=utf-8><title>" + escapeHtml(state.t) + " – FTL source</title>"
+      + "<style>body{font:13px/1.55 system-ui,sans-serif;margin:0;padding:18px;background:#fff}"
+      + "h3{font:600 12px ui-monospace,monospace;margin:18px 0 0;padding:7px 10px;background:#f6f8fa;border:1px solid #e1e4e8;border-bottom:0;border-radius:4px 4px 0 0}"
+      + "pre{margin:0;padding:14px;white-space:pre-wrap;font:13px/1.55 ui-monospace,monospace;border:1px solid #e1e4e8;border-radius:0 0 4px 4px}</style>"
+      + files.map(f => `<h3>${escapeHtml(f.path)}</h3><pre>${escapeHtml(f.source)}</pre>`).join("");
+    ftlBlobUrl = URL.createObjectURL(new Blob([page], { type: "text/html" }));
+    $("#openTab").href = ftlBlobUrl;
+    return;
+  }
+  revokeFtlBlob();
+  $("#openTab").href = renderUrl(state.type === "email" ? state.part : null);
+  if (state.type === "email") {
+    const meta = await json(renderUrl("meta"));
+    $("#subject").innerHTML = meta.error ? `<span>Error</span>` : `<span>Subject:</span>${escapeHtml(meta.subject || "")}`;
+    if (isText) {
+      frame.innerHTML = meta.error ? `<div class="err">${escapeHtml(meta.error)}</div>`
+        : `<pre class="text">${escapeHtml(meta.text ?? "(no text template available)")}</pre>`;
+      return;
+    }
+  }
+  let iframe = frame.querySelector("iframe");
+  let scroll = 0;
+  try { if (keepScroll && iframe) scroll = iframe.contentWindow.scrollY; } catch (e) {}
+  if (!iframe) { frame.innerHTML = ""; iframe = document.createElement("iframe"); frame.append(iframe); }
+  iframe.style.colorScheme = state.scheme;
+  iframe.onload = () => { try { if (scroll) iframe.contentWindow.scrollTo(0, scroll); } catch (e) {} };
+  iframe.src = renderUrl(state.type === "email" ? "html" : null) + "&_=" + Date.now();
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+async function poll() {
+  try {
+    const { stamp: s } = await json("/api/changes");
+    if (stamp !== null && s !== stamp) {
+      const d = $("#dot"); d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash");
+      await loadCatalog(); await loadTemplates(); show(true);
+    }
+    stamp = s;
+    $("#dot").style.background = "";
+  } catch (e) { $("#dot").style.background = "#c62828"; }
+  setTimeout(poll, 1000);
+}
+
+seg("#typeSeg", "type", async () => { state.t = ""; fillThemes(); await loadTemplates(); show(); });
+seg("#vpSeg", "vp", () => show(true));
+seg("#schemeSeg", "scheme", () => show(true));
+seg("#partSeg", "part", () => show());
+$("#theme").onchange = async e => { state.theme = e.target.value; await loadTemplates(); show(); };
+$("#locale").onchange = e => { state.l = e.target.value; show(true); };
+$("#filter").oninput = renderList;
+
+(async () => { await loadCatalog(); await loadTemplates(); show(); poll(); })();
+</script>
+</body>
+</html>

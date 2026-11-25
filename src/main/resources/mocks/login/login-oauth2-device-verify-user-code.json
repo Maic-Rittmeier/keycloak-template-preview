@@ -1,0 +1,5 @@
+{
+  "url": {
+    "oauth2DeviceVerificationAction": "/__submit"
+  }
+}

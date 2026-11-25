@@ -1,0 +1,29 @@
+{
+  "challenge": "ZGVtby1jaGFsbGVuZ2U",
+  "rpId": "localhost",
+  "createTimeout": 0,
+  "userVerification": "not specified",
+  "isUserIdentified": "false",
+  "shouldDisplayAuthenticators": true,
+  "authenticatorAttachment": "not specified",
+  "enableWebAuthnConditionalUI": true,
+  "authenticators": {
+    "authenticators": [
+      {
+        "credentialId": "cred-1",
+        "label": "YubiKey 5",
+        "createdAt": "12.10.2026",
+        "authenticatorProvider": "",
+        "transports": {
+          "iconClass": "kcWebAuthnUSB",
+          "displayNameProperties": [
+            "webauthn-display-name-usb"
+          ]
+        }
+      }
+    ]
+  },
+  "auth": {
+    "showUsername": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "recoveryAuthnCodesConfigBean": {
+    "generatedAt": 1795680000000,
+    "generatedRecoveryAuthnCodesList": [
+      "4JQ7-WX9P-2M8K",
+      "T3ZB-6NVE-Q1RC",
+      "8HDK-PL5A-YW2S",
+      "M6CT-R9XF-3BQE",
+      "Z2NW-7KHD-5PLA",
+      "A9RS-4ETQ-6MXV",
+      "Q5LB-2YCN-8WHT",
+      "W7FE-K3PZ-1DRN",
+      "C4XM-9QAV-7JTB",
+      "N1HV-5BWS-2ELK",
+      "E8PD-6ZRT-4CNQ",
+      "R3KA-1MYL-9VBW"
+    ],
+    "generatedRecoveryAuthnCodesAsString": "4JQ7-WX9P-2M8K,T3ZB-6NVE-Q1RC,8HDK-PL5A-YW2S,M6CT-R9XF-3BQE,Z2NW-7KHD-5PLA,A9RS-4ETQ-6MXV,Q5LB-2YCN-8WHT,W7FE-K3PZ-1DRN,C4XM-9QAV-7JTB,N1HV-5BWS-2ELK,E8PD-6ZRT-4CNQ,R3KA-1MYL-9VBW"
+  }
+}

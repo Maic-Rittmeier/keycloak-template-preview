@@ -1,0 +1,69 @@
+{
+  "profile": {
+    "attributes": [
+      {
+        "name": "username",
+        "displayName": "${username}",
+        "required": true,
+        "readOnly": false,
+        "multivalued": false,
+        "autocomplete": "username",
+        "annotations": {},
+        "validators": {},
+        "values": [
+          "john.doe"
+        ],
+        "value": "john.doe",
+        "html5DataAnnotations": {}
+      },
+      {
+        "name": "email",
+        "displayName": "${email}",
+        "required": true,
+        "readOnly": false,
+        "multivalued": false,
+        "autocomplete": "email",
+        "annotations": {
+          "inputType": "email"
+        },
+        "validators": {},
+        "values": [
+          "john@example.com"
+        ],
+        "value": "john@example.com",
+        "html5DataAnnotations": {}
+      },
+      {
+        "name": "firstName",
+        "displayName": "${firstName}",
+        "required": true,
+        "readOnly": false,
+        "multivalued": false,
+        "autocomplete": "given-name",
+        "annotations": {},
+        "validators": {},
+        "values": [
+          "John"
+        ],
+        "value": "John",
+        "html5DataAnnotations": {}
+      },
+      {
+        "name": "lastName",
+        "displayName": "${lastName}",
+        "required": true,
+        "readOnly": false,
+        "multivalued": false,
+        "autocomplete": "family-name",
+        "annotations": {},
+        "validators": {},
+        "values": [
+          "Doe"
+        ],
+        "value": "Doe",
+        "html5DataAnnotations": {}
+      }
+    ],
+    "html5DataAnnotations": {}
+  }
+}

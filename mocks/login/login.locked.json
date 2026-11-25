@@ -1,0 +1,5 @@
+// Custom variant: shows up in the preview menu as "locked" for login.ftl
+{
+  "message": { "type": "warning", "summary": "Too many failed attempts. Your account is locked for 15 minutes." },
+  "login": { "username": "john.doe" }
+}

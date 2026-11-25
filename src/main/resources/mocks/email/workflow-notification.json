@@ -1,0 +1,7 @@
+{
+  "_subjectKey": "accountDisableNotificationSubject",
+  "subjectKey": "accountDisableNotificationSubject",
+  "messageKey": "accountDisableNotificationBody",
+  "daysRemaining": 7,
+  "reason": "Inactivity"
+}

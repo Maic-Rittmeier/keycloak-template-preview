@@ -1,0 +1,25 @@
+{
+  "auth": {
+    "showUsername": true,
+    "authenticationSelections": [
+      {
+        "authExecId": "exec-otp",
+        "displayName": "otp-display-name",
+        "helpText": "otp-help-text",
+        "iconCssClass": "kcAuthenticatorOTPClass"
+      },
+      {
+        "authExecId": "exec-webauthn",
+        "displayName": "webauthn-display-name",
+        "helpText": "webauthn-help-text",
+        "iconCssClass": "kcAuthenticatorWebAuthnClass"
+      },
+      {
+        "authExecId": "exec-recovery",
+        "displayName": "recovery-authn-code-display-name",
+        "helpText": "recovery-authn-code-help-text",
+        "iconCssClass": "kcAuthenticatorRecoveryAuthnCodesClass"
+      }
+    ]
+  }
+}

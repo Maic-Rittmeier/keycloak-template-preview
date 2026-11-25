@@ -1,0 +1,11 @@
+{
+  "message": {
+    "type": "info",
+    "summary": "Please confirm the action."
+  },
+  "actionUri": "#continue",
+  "requiredActions": [
+    "CONFIGURE_TOTP",
+    "UPDATE_PASSWORD"
+  ]
+}

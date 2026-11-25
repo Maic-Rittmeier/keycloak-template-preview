@@ -1,0 +1,4 @@
+// for-keycloak/email-otp-authenticator: plain code entry, no device trust
+{
+  "deviceTrustEnabled": false
+}

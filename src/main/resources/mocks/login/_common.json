@@ -1,0 +1,60 @@
+// Defaults for ALL login pages. Page-specific data: <page>.json, variants: <page>.<variant>.json
+// Keys starting with "_" control the preview itself and don't end up in the template.
+{
+  "_supportedLocales": ["de", "en"],
+  "_authenticatorConfigured": true,
+  "realm": {
+    "name": "demo",
+    "displayName": "Demo Booking System",
+    "displayNameHtml": "<strong>Demo</strong> Booking System",
+    "internationalizationEnabled": true,
+    "registrationAllowed": true,
+    "registrationEmailAsUsername": false,
+    "loginWithEmailAllowed": true,
+    "duplicateEmailsAllowed": false,
+    "resetPasswordAllowed": true,
+    "rememberMe": true,
+    "editUsernameAllowed": false,
+    "identityFederationEnabled": false,
+    "password": true,
+    "actionTokenGeneratedByUserLifespanMinutes": 5,
+    "verifyEmailActionTokenLifespanMinutes": 720,
+    "resetCredentialsActionTokenLifespanMinutes": 5,
+    "idpVerifyAccountLinkActionTokenLifespanMinutes": 5,
+    "attributes": {}
+  },
+  "client": {
+    "clientId": "booking-app",
+    "name": "Booking System",
+    "description": "",
+    "baseUrl": "https://booking.example.com",
+    "attributes": {}
+  },
+  "auth": {
+    "showUsername": false,
+    "showResetCredentials": false,
+    "showTryAnotherWayLink": false,
+    "attemptedUsername": "john.doe",
+    "authenticationSelections": [],
+    "selectedCredential": ""
+  },
+  "login": {
+    "username": "",
+    "password": "",
+    "rememberMe": ""
+  },
+  "social": {
+    "displayInfo": false,
+    "providers": []
+  },
+  "passwordPolicies": {},
+  "user": {
+    "username": "john.doe",
+    "email": "john@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "editUsernameAllowed": false
+  },
+  "messagesPerField": {},
+  "isAppInitiatedAction": false
+}

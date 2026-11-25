@@ -1,0 +1,14 @@
+{
+  "auth": {
+    "showUsername": true
+  },
+  "otpLogin": {
+    "selectedCredentialId": "otp-1",
+    "userOtpCredentials": [
+      {
+        "id": "otp-1",
+        "userLabel": "Smartphone"
+      }
+    ]
+  }
+}

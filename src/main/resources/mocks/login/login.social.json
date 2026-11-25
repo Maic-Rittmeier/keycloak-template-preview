@@ -1,0 +1,28 @@
+{
+  "social": {
+    "displayInfo": true,
+    "providers": [
+      {
+        "alias": "google",
+        "providerId": "google",
+        "displayName": "Google",
+        "loginUrl": "#google",
+        "iconClasses": "fa fa-google"
+      },
+      {
+        "alias": "microsoft",
+        "providerId": "microsoft",
+        "displayName": "Microsoft",
+        "loginUrl": "#microsoft",
+        "iconClasses": "fa fa-windows"
+      },
+      {
+        "alias": "github",
+        "providerId": "github",
+        "displayName": "GitHub",
+        "loginUrl": "#github",
+        "iconClasses": "fa fa-github"
+      }
+    ]
+  }
+}

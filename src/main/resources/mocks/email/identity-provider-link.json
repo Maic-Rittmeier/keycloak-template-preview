@@ -1,0 +1,10 @@
+{
+  "identityProviderContext": {
+    "username": "john.doe"
+  },
+  "identityProviderAlias": "google",
+  "identityProviderDisplayName": "Google",
+  "_subjectArgs": [
+    "Google"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "showUsername": true
+  },
+  "challenge": "ZGVtby1jaGFsbGVuZ2U",
+  "userid": "dXNlci0x",
+  "username": "john.doe",
+  "signatureAlgorithms": [
+    -7,
+    -257
+  ],
+  "rpEntityName": "keycloak",
+  "rpId": "localhost",
+  "attestationConveyancePreference": "not specified",
+  "authenticatorAttachment": "not specified",
+  "requireResidentKey": "not specified",
+  "residentKey": "not specified",
+  "userVerificationRequirement": "not specified",
+  "createTimeout": 0,
+  "excludeCredentialIds": ""
+}

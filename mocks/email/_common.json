@@ -1,0 +1,5 @@
+// Overrides the bundled defaults for all emails in this project
+{
+  "realmName": "Demo Booking System",
+  "user": { "firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "username": "jane.doe" }
+}
